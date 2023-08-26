@@ -58,7 +58,7 @@ class Compressor {
     Header header;
 
     // external codec that has complex internals
-    Codec* codec;
+    Codec* codec{nullptr};
 
     float time_pred, time_hist, time_sp;
 
@@ -72,7 +72,7 @@ class Compressor {
 
     // buffers
 
-    pszmempool_cxx<T, E, H>* mem;
+    pszmempool_cxx<T, E, H>* mem{nullptr};
 
    public:
     Compressor() = default;

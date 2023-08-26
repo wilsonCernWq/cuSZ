@@ -37,6 +37,7 @@ namespace cusz {
 TEMPLATE_TYPE
 HuffmanCodec<T, H, M>::~HuffmanCodec()
 {
+    delete compressed;
     delete tmp;
     delete book;
     delete revbook;

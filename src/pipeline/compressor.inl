@@ -64,8 +64,6 @@ template <class C>
 template <class CONFIG>
 Compressor<C>* Compressor<C>::init(CONFIG* config, bool debug)
 {
-  codec = new Codec;
-
   const auto radius = config->radius;
   const auto pardeg = config->vle_pardeg;
   // const auto density_factor = config->nz_density_factor;
@@ -77,8 +75,14 @@ Compressor<C>* Compressor<C>::init(CONFIG* config, bool debug)
 
   len = x * y * z;
 
-  codec->init(len, booklen, pardeg, debug);
-  mem = new pszmempool_cxx<T, E, H>(x, radius, y, z);
+  if (!codec) {
+    codec = new Codec;
+    codec->init(len, booklen, pardeg, debug);
+  }
+
+  if (!mem) {
+    mem = new pszmempool_cxx<T, E, H>(x, radius, y, z);
+  }
 
   return this;
 }

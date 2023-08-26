@@ -115,7 +115,10 @@ TPL POOL::pszmempool_cxx(u4 x, int _radius, u4 y, u4 z)
 TPL POOL::~pszmempool_cxx()
 {
   delete ac, delete e, delete oc, delete ht, delete sv, delete si;
+  delete od, delete xd, delete el, delete es;
+  delete _compressed;
   compact->control({Free, FreeHost});
+  delete compact;
 }
 
 TPL POOL *POOL::clear_buffer()

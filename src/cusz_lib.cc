@@ -43,6 +43,13 @@ cusz_compressor* cusz_create(cusz_framework* _framework, cusz_datatype _type)
 
 cusz_error_status cusz_release(cusz_compressor* comp)
 {
+    if (comp->compressor) {
+        using DATA       = float;
+        using Compressor = cusz::CompressorFP32;
+
+        Compressor* compressor = static_cast<Compressor*>(comp->compressor);
+        delete compressor;
+    }
     delete comp;
     return CUSZ_SUCCESS;
 }
@@ -84,6 +91,8 @@ cusz_error_status cusz_compress(
     else {
         throw std::runtime_error(std::string(__FUNCTION__) + ": Type is not supported.");
     }
+
+    delete ctx;
 
     return CUSZ_SUCCESS;
 }
