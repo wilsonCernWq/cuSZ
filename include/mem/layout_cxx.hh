@@ -123,13 +123,14 @@ TPL POOL::~pszmempool_cxx()
 
 TPL POOL *POOL::clear_buffer()
 {
-  e->control({ClearDevice});
-  ac->control({ClearDevice});
+  _compressed->control({ClearDevice});
   oc->control({ClearDevice});
+  ac->control({ClearDevice});
+  e->control({ClearDevice});
+  ht->control({ClearDevice});
   sv->control({ClearDevice});
   si->control({ClearDevice});
-  _compressed->control({ClearDevice});
-
+  compact->control({ClearDevice});
   return this;
 }
 

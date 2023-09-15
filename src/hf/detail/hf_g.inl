@@ -45,6 +45,11 @@ HuffmanCodec<T, H, M>::~HuffmanCodec()
     delete par_ncell;
     delete par_entry;
     delete bitstream;
+
+    delete book_desc;
+    delete chunk_desc_d;
+    delete chunk_desc_h;
+    delete bitstream_desc;
 }
 
 TEMPLATE_TYPE
