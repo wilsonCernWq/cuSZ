@@ -18,6 +18,16 @@
 // #include <thrust/device_vector.h>
 #include <thrust/execution_policy.h>
 
+namespace {
+template<typename T = void>
+struct plus {
+    typedef T first_argument_type;
+    typedef T second_argument_type;
+    typedef T result_type;
+    __host__ __device__ constexpr T operator()(const T &lhs, const T &rhs) const { return lhs + rhs; }
+}; // end plus
+}
+
 namespace psz {
 
 static const int MINVAL = 0;
@@ -36,7 +46,7 @@ void thrustgpu_get_extrema_rawptr(T* d_ptr, size_t len, T res[4])
     res[MAXVAL] = *(g_ptr + maxel);
     res[RNG]    = res[MAXVAL] - res[MINVAL];
 
-    auto sum    = thrust::reduce(g_ptr, g_ptr + len, (T)0.0, thrust::plus<T>());
+    auto sum    = thrust::reduce(g_ptr, g_ptr + len, (T)0.0, plus<T>());
     res[AVGVAL] = sum / len;
 }
 
@@ -51,7 +61,7 @@ void thrustgpu_get_extrema(thrust::device_ptr<T> g_ptr, size_t len, T res[4])
     res[MAXVAL] = *(g_ptr + maxel);
     res[RNG]    = res[MAXVAL] - res[MINVAL];
 
-    auto sum    = thrust::reduce(g_ptr, g_ptr + len, (T)0.0, thrust::plus<T>());
+    auto sum    = thrust::reduce(g_ptr, g_ptr + len, (T)0.0, plus<T>());
     res[AVGVAL] = sum / len;
 }
 */

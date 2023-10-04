@@ -22,6 +22,16 @@
 
 #include "cusz/type.h"
 
+namespace {
+template<typename T = void>
+struct plus {
+    typedef T first_argument_type;
+    typedef T second_argument_type;
+    typedef T result_type;
+    __host__ __device__ constexpr T operator()(const T &lhs, const T &rhs) const { return lhs + rhs; }
+}; // end plus
+}
+
 namespace psz {
 
 static const int MINVAL = 0;
@@ -54,10 +64,10 @@ void thrustgpu_assess_quality(cusz_stats* s, T* xdata, T* odata, size_t len)
     auto var_odata = [=] __host__ __device__(T a) { T f = a - odata[AVGVAL]; return f * f; };
     auto var_xdata = [=] __host__ __device__(T a) { T f = a - xdata[AVGVAL]; return f * f; };
 
-    auto sum_err2      = thrust::transform_reduce(begin, end, err2, 0.0f, thrust::plus<T>());
-    auto sum_corr      = thrust::transform_reduce(begin, end, corr, 0.0f, thrust::plus<T>());
-    auto sum_var_odata = thrust::transform_reduce(p_odata, p_odata + len, var_odata, 0.0f, thrust::plus<T>());
-    auto sum_var_xdata = thrust::transform_reduce(p_xdata, p_xdata + len, var_xdata, 0.0f, thrust::plus<T>());
+    auto sum_err2      = thrust::transform_reduce(begin, end, err2, 0.0f, plus<T>());
+    auto sum_corr      = thrust::transform_reduce(begin, end, corr, 0.0f, plus<T>());
+    auto sum_var_odata = thrust::transform_reduce(p_odata, p_odata + len, var_odata, 0.0f, plus<T>());
+    auto sum_var_xdata = thrust::transform_reduce(p_xdata, p_xdata + len, var_xdata, 0.0f, plus<T>());
     // clang-format on
 
     double std_odata = sqrt(sum_var_odata / len);
