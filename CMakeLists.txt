@@ -62,7 +62,7 @@ target_include_directories(
 
 # seprate later
 add_library(psztime src/utils/timer_cpu.cc src/utils/timer_gpu.cc)
-target_link_libraries(psztime PUBLIC pszcompile_settings CUDA::cudart)
+target_link_libraries(psztime PUBLIC pszcompile_settings CUDA::cudart_static)
 
 add_library(pszstat_ser src/stat/compare_cpu.cc)
 target_link_libraries(pszstat_ser PUBLIC pszcompile_settings)
@@ -94,7 +94,7 @@ add_library(
 target_link_libraries(pszkernel_cu PUBLIC pszcompile_settings)
 
 add_library(pszmem src/mem/memseg.cc)
-target_link_libraries(pszmem PUBLIC pszcompile_settings CUDA::cudart)
+target_link_libraries(pszmem PUBLIC pszcompile_settings CUDA::cudart_static)
 
 add_library(pszutils_ser src/utils/vis_stat.cc src/context.cc)
 target_link_libraries(pszutils_ser PUBLIC pszcompile_settings)
@@ -132,10 +132,10 @@ target_link_libraries(pszhf_cu PUBLIC pszcompile_settings pszstat_cu
 
 add_library(psz_comp src/custom.cc src/compressor.cc)
 target_link_libraries(psz_comp PUBLIC pszcompile_settings pszkernel_cu
-                                      pszstat_cu pszhf_cu CUDA::cudart)
+                                      pszstat_cu pszhf_cu CUDA::cudart_static)
 
 # add_library(psz_comp2 src/psz_lib.cc src/rt_config.cu)
-# target_link_libraries(psz_comp2 PUBLIC pszcompile_settings CUDA::cudart)
+# target_link_libraries(psz_comp2 PUBLIC pszcompile_settings CUDA::cudart_static)
 
 add_library(cusz src/cusz_lib.cc)
 target_link_libraries(

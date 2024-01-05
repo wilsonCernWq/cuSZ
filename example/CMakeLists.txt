@@ -3,11 +3,11 @@ target_link_libraries(demo_capi_nvcc PRIVATE cusz)
 set_target_properties(demo_capi_nvcc PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
 add_executable(demo_cxx_link src/demo_cxx_link.cc)
-target_link_libraries(demo_cxx_link PRIVATE pszkernel_cu CUDA::cudart)
+target_link_libraries(demo_cxx_link PRIVATE pszkernel_cu CUDA::cudart_static)
 
 # add_executable(demo_lorenzo_variant src/demo_lorenzo_variant.cc)
 # target_link_libraries(demo_lorenzo_variant PRIVATE pszkernel_cu pszutils_cu
-# pszstat_cu CUDA::cudart)
+# pszstat_cu CUDA::cudart_static)
 
 add_library(ex_utils src/ex_utils.cu)
 target_link_libraries(ex_utils PUBLIC pszcompile_settings)
@@ -23,20 +23,20 @@ target_link_libraries(
           pszhf_cu
           pszkernel_ser
           ex_utils
-          CUDA::cudart)
+          CUDA::cudart_static)
 
 add_executable(bin_hf src/bin_hf.cc)
 target_link_libraries(bin_hf PRIVATE cusz pszutils_cu pszstat_cu pszhf_cu
-                                     CUDA::cudart)
+                                     CUDA::cudart_static)
 set_target_properties(bin_hf PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
 add_executable(bin_hist src/bin_hist.cc)
 target_link_libraries(bin_hist PRIVATE pszkernel_cu pszkernel_ser pszutils_cu
-                                       pszmem pszstat_cu CUDA::cudart)
+                                       pszmem pszstat_cu CUDA::cudart_static)
 
 # add_executable(bin_spv src/bin_spv.cc) target_link_libraries(bin_spv PRIVATE
-# pszspv_cu pszutils_cu pszstat_cu CUDA::cudart)
+# pszspv_cu pszutils_cu pszstat_cu CUDA::cudart_static)
 
 add_executable(bin_hfserial src/bin_hfserial.cc)
 target_link_libraries(bin_hfserial PRIVATE pszhfbook_ser pszhf_cu pszmem
-                                           CUDA::cudart)
+                                           CUDA::cudart_static)

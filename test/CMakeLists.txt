@@ -1,12 +1,12 @@
 # utils for test
 add_library(psz_testutils src/rand.cc src/rand_g.cc)
-target_link_libraries(psz_testutils CUDA::cudart CUDA::curand)
+target_link_libraries(psz_testutils CUDA::cudart_static CUDA::curand)
 
 # TODO include test_l23_utils.hh
 
 # # testing the utils add_executable(utils src/utils.cc)
 # target_link_directories(utils PRIVATE psz_testutils pszstat_ser pszstat_cu
-# pszutils_cu CUDA::cudart) add_test(test_utils utils)
+# pszutils_cu CUDA::cudart_static) add_test(test_utils utils)
 
 # add_executable(pred_hl src/spv.cu) target_link_libraries(pred_hl PRIVATE
 # pszspv_cu psz_testutils) add_test(test_pred_hl pred_hl)
@@ -82,7 +82,7 @@ target_link_libraries(
           pszstat_cu
           pszmem
           pszutils_cu
-          CUDA::cudart)
+          CUDA::cudart_static)
 add_test(test_l3_cuda_pred l3_cuda_pred)
 
 add_executable(l3_lorenzosp src/test_l3_lorenzosp.cu)
@@ -96,6 +96,6 @@ target_link_libraries(
           pszstat_cu
           pszmem
           pszutils_cu
-          # CUDA::cudart
+          # CUDA::cudart_static
 )
 add_test(test_l3_lorenzosp l3_lorenzosp)
